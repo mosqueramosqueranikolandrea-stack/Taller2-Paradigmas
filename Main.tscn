@@ -1645,7 +1645,7 @@ sources/4 = SubResource("TileSetAtlasSource_fpfj3")
 size = Vector2(66.5, 67)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_devvj"]
-size = Vector2(100.5, 91.5)
+size = Vector2(84, 83.5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5tuhn"]
 animations = [{
@@ -1665,10 +1665,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2ibq"]
-size = Vector2(74, 93)
+size = Vector2(65, 82)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4qnp"]
-size = Vector2(69, 152)
+size = Vector2(50, 82)
 
 [node name="Main" type="Node2D" unique_id=852754187]
 
@@ -1706,7 +1706,7 @@ shape = SubResource("RectangleShape2D_2gh4u")
 [node name="AttackArea" type="Area2D" parent="Hero" unique_id=1862411903]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hero/AttackArea" unique_id=1402293457]
-position = Vector2(381.75, 266.25)
+position = Vector2(388, 262.25)
 shape = SubResource("RectangleShape2D_devvj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Hero" unique_id=1901466136]
@@ -1723,7 +1723,7 @@ position = Vector2(-157, -15)
 texture = ExtResource("12_sc1dx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FastEnemy" unique_id=1673681814]
-position = Vector2(-156, -15.5)
+position = Vector2(-154.5, -17)
 shape = SubResource("RectangleShape2D_c2ibq")
 
 [node name="StrongEnemy" type="CharacterBody2D" parent="." unique_id=815290073 groups=["Enemies"]]
@@ -1735,5 +1735,5 @@ position = Vector2(520, 202)
 texture = ExtResource("14_5tuhn")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StrongEnemy" unique_id=879988916]
-position = Vector2(523.5, 208)
+position = Vector2(528, 235)
 shape = SubResource("RectangleShape2D_j4qnp")
