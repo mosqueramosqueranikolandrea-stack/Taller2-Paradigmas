@@ -5,17 +5,18 @@ public partial class Hero : CharacterBody2D
 {
 	[Export] public float Speed = 200;
 
+	private AnimatedSprite2D anim;
 	private Area2D attackArea;
 	private bool enemyInRange = false;
 
 	public override void _Ready()
 	{
+		anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		anim.Play("idle");
+
 		attackArea = GetNode<Area2D>("AttackArea");
 
-		// Detectar cuando un enemigo entra
 		attackArea.BodyEntered += OnBodyEntered;
-
-		// Detectar cuando sale
 		attackArea.BodyExited += OnBodyExited;
 	}
 
@@ -29,16 +30,22 @@ public partial class Hero : CharacterBody2D
 		Velocity = direction.Normalized() * Speed;
 		MoveAndSlide();
 
-		// ATAQUE SOLO SI HAY ENEMIGO CERCA
+		// 🔹 ANIMACIÓN (respirar cuando está quieto)
+		if (direction == Vector2.Zero)
+		{
+			anim.Play("idle");
+		}
+
+		// 🔹 ATAQUE
 		if (enemyInRange && Input.IsActionJustPressed("attack"))
 		{
-			GD.Print("⚔️ Atacando enemigo cercano");
+			GD.Print("⚔️ Atacando enemigo");
 
 			foreach (var body in attackArea.GetOverlappingBodies())
 			{
 				if (body.IsInGroup("Enemies"))
 				{
-					body.QueueFree(); // elimina enemigo
+					body.QueueFree();
 				}
 			}
 		}

@@ -9,8 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://bfd10n2pt66ga" path="res://Tiny Swords (Free Pack)/Buildings/Red Buildings/House2.png" id="7_c6i3y"]
 [ext_resource type="Texture2D" uid="uid://brtt3cwfy8cwh" path="res://Tiny Swords (Free Pack)/Buildings/Yellow Buildings/Tower.png" id="8_c2ibq"]
 [ext_resource type="Script" uid="uid://bdwkb4pmuqhkp" path="res://Clases/Hero.cs" id="9_c2ibq"]
-[ext_resource type="Texture2D" uid="uid://bask5dc3vlwi" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Purple Units/Warrior/Warrior_Idle.png" id="10_j4qnp"]
+[ext_resource type="Texture2D" uid="uid://dvk8cfc73474k" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Purple Units/Warrior/Warrior_Idle1.png" id="10_fpfj3"]
 [ext_resource type="Script" uid="uid://3kmnqslanhob" path="res://Clases/FastEnemy.cs" id="11_fpfj3"]
+[ext_resource type="Texture2D" uid="uid://cb70bfje1y5vl" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Purple Units/Warrior/Warrior_Idle2.png" id="11_sc1dx"]
+[ext_resource type="Texture2D" uid="uid://dwn8aod2pedvw" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Purple Units/Warrior/Warrior_Idle3.png" id="12_kjvhd"]
 [ext_resource type="Texture2D" uid="uid://3eerwf2nqa7w" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Red Units/Archer/Archer_Idle.png" id="12_sc1dx"]
 [ext_resource type="Script" uid="uid://23wotlffer28" path="res://Clases/StrongEnemy.cs" id="13_kjvhd"]
 [ext_resource type="Texture2D" uid="uid://cjen4px5awglh" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Red Units/Lancer/Lancer_Idle.png" id="14_5tuhn"]
@@ -1640,10 +1642,27 @@ sources/3 = SubResource("TileSetAtlasSource_j4qnp")
 sources/4 = SubResource("TileSetAtlasSource_fpfj3")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2gh4u"]
-size = Vector2(75, 67)
+size = Vector2(66.5, 67)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_devvj"]
-size = Vector2(106.5, 91.5)
+size = Vector2(100.5, 91.5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5tuhn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_fpfj3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_sc1dx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kjvhd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2ibq"]
 size = Vector2(74, 93)
@@ -1680,19 +1699,20 @@ texture = ExtResource("4_wkp8b")
 [node name="Hero" type="CharacterBody2D" parent="." unique_id=546226487]
 script = ExtResource("9_c2ibq")
 
-[node name="Sprite2D" type="Sprite2D" parent="Hero" unique_id=2070645333]
-position = Vector2(386, 266)
-texture = ExtResource("10_j4qnp")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hero" unique_id=153412078]
-position = Vector2(391, 266)
+position = Vector2(386.75, 266)
 shape = SubResource("RectangleShape2D_2gh4u")
 
 [node name="AttackArea" type="Area2D" parent="Hero" unique_id=1862411903]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hero/AttackArea" unique_id=1402293457]
-position = Vector2(384.75, 266.25)
+position = Vector2(381.75, 266.25)
 shape = SubResource("RectangleShape2D_devvj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Hero" unique_id=1901466136]
+position = Vector2(392, 264)
+sprite_frames = SubResource("SpriteFrames_5tuhn")
+animation = &"idle"
 
 [node name="FastEnemy" type="CharacterBody2D" parent="." unique_id=206826912 groups=["Enemies"]]
 position = Vector2(377, 272)
