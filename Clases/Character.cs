@@ -3,19 +3,20 @@ using System;
 
 public partial class Character : CharacterBody2D
 {
-	[Export] public float Speed = 100;
+	[Export] public int Speed = 100;
 	[Export] public int Health = 100;
 	[Export] public int Damage = 10;
 
-	public override void _PhysicsProcess(double delta)
+	public virtual void MoveCharacter(Vector2 direction)
 	{
+		Velocity = direction * Speed;
 		MoveAndSlide();
 	}
 
-	public void TakeDamage(int amount)
+	public virtual void TakeDamage(int amount)
 	{
 		Health -= amount;
-		GD.Print("Vida restante: " + Health);
+		GD.Print(Name + " recibió daño: " + amount);
 
 		if (Health <= 0)
 		{
@@ -23,13 +24,9 @@ public partial class Character : CharacterBody2D
 		}
 	}
 
-	public virtual void Attack(Character target)
-	{
-		target.TakeDamage(Damage);
-	}
-
 	public virtual void Die()
 	{
+		GD.Print(Name + " murió");
 		QueueFree();
 	}
 }

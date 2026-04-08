@@ -1,40 +1,49 @@
 using Godot;
 using System;
 
-public partial class Hero : CharacterBody2D
+public partial class Hero : Character
 {
-	public const float Speed = 300.0f;
-	public const float JumpVelocity = -400.0f;
+	private Area2D attackArea;
+
+	public override void _Ready()
+	{
+		attackArea = GetNode<Area2D>("AttackArea");
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
+		Vector2 direction = Vector2.Zero;
 
-		// Add the gravity.
-		if (!IsOnFloor())
-		{
-			velocity += GetGravity() * (float)delta;
-		}
+		if (Input.IsActionPressed("ui_right"))
+			direction.X += 1;
+		if (Input.IsActionPressed("ui_left"))
+			direction.X -= 1;
+		if (Input.IsActionPressed("ui_down"))
+			direction.Y += 1;
+		if (Input.IsActionPressed("ui_up"))
+			direction.Y -= 1;
 
-		// Handle Jump.
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-		{
-			velocity.Y = JumpVelocity;
-		}
+		MoveCharacter(direction.Normalized());
+	}
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-		if (direction != Vector2.Zero)
+	public override void _Process(double delta)
+	{
+		if (Input.IsActionJustPressed("ui_accept"))
 		{
-			velocity.X = direction.X * Speed;
+			Attack();
 		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-		}
+	}
 
-		Velocity = velocity;
-		MoveAndSlide();
+	private void Attack()
+	{
+		var bodies = attackArea.GetOverlappingBodies();
+
+		foreach (Node body in bodies)
+		{
+			if (body is Character enemy && body != this)
+			{
+				enemy.TakeDamage(Damage);
+			}
+		}
 	}
 }
