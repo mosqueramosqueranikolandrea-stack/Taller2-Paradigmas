@@ -1,49 +1,64 @@
 using Godot;
 using System;
 
-public partial class Hero : Character
+public partial class Hero : CharacterBody2D
 {
+	[Export] public float Speed = 200;
+
 	private Area2D attackArea;
+	private bool enemyInRange = false;
 
 	public override void _Ready()
 	{
 		attackArea = GetNode<Area2D>("AttackArea");
+
+		// Detectar cuando un enemigo entra
+		attackArea.BodyEntered += OnBodyEntered;
+
+		// Detectar cuando sale
+		attackArea.BodyExited += OnBodyExited;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 direction = Vector2.Zero;
 
-		if (Input.IsActionPressed("ui_right"))
-			direction.X += 1;
-		if (Input.IsActionPressed("ui_left"))
-			direction.X -= 1;
-		if (Input.IsActionPressed("ui_down"))
-			direction.Y += 1;
-		if (Input.IsActionPressed("ui_up"))
-			direction.Y -= 1;
+		direction.X = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
+		direction.Y = Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up");
 
-		MoveCharacter(direction.Normalized());
-	}
+		Velocity = direction.Normalized() * Speed;
+		MoveAndSlide();
 
-	public override void _Process(double delta)
-	{
-		if (Input.IsActionJustPressed("ui_accept"))
+		// ATAQUE SOLO SI HAY ENEMIGO CERCA
+		if (enemyInRange && Input.IsActionJustPressed("attack"))
 		{
-			Attack();
+			GD.Print("⚔️ Atacando enemigo cercano");
+
+			foreach (var body in attackArea.GetOverlappingBodies())
+			{
+				if (body.IsInGroup("Enemies"))
+				{
+					body.QueueFree(); // elimina enemigo
+				}
+			}
 		}
 	}
 
-	private void Attack()
+	private void OnBodyEntered(Node body)
 	{
-		var bodies = attackArea.GetOverlappingBodies();
-
-		foreach (Node body in bodies)
+		if (body.IsInGroup("Enemies"))
 		{
-			if (body is Character enemy && body != this)
-			{
-				enemy.TakeDamage(Damage);
-			}
+			enemyInRange = true;
+			GD.Print("👀 Enemigo cerca");
+		}
+	}
+
+	private void OnBodyExited(Node body)
+	{
+		if (body.IsInGroup("Enemies"))
+		{
+			enemyInRange = false;
+			GD.Print("🚫 Enemigo fuera de rango");
 		}
 	}
 }

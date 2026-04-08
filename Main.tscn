@@ -1643,15 +1643,13 @@ sources/4 = SubResource("TileSetAtlasSource_fpfj3")
 size = Vector2(75, 67)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_devvj"]
-size = Vector2(81, 77)
+size = Vector2(106.5, 91.5)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3b0ty"]
-radius = 35.0
-height = 84.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2ibq"]
+size = Vector2(74, 93)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bg4s2"]
-radius = 25.0
-height = 80.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4qnp"]
+size = Vector2(69, 152)
 
 [node name="Main" type="Node2D" unique_id=852754187]
 
@@ -1681,7 +1679,6 @@ texture = ExtResource("4_wkp8b")
 
 [node name="Hero" type="CharacterBody2D" parent="." unique_id=546226487]
 script = ExtResource("9_c2ibq")
-Speed = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Hero" unique_id=2070645333]
 position = Vector2(386, 266)
@@ -1694,31 +1691,29 @@ shape = SubResource("RectangleShape2D_2gh4u")
 [node name="AttackArea" type="Area2D" parent="Hero" unique_id=1862411903]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hero/AttackArea" unique_id=1402293457]
-position = Vector2(403, 266)
+position = Vector2(384.75, 266.25)
 shape = SubResource("RectangleShape2D_devvj")
 
-[node name="FastEnemy" type="CharacterBody2D" parent="." unique_id=206826912]
+[node name="FastEnemy" type="CharacterBody2D" parent="." unique_id=206826912 groups=["Enemies"]]
 position = Vector2(377, 272)
 script = ExtResource("11_fpfj3")
-Speed = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="FastEnemy" unique_id=392771084]
 position = Vector2(-157, -15)
 texture = ExtResource("12_sc1dx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FastEnemy" unique_id=1673681814]
-position = Vector2(-154, -15)
-shape = SubResource("CapsuleShape2D_3b0ty")
+position = Vector2(-156, -15.5)
+shape = SubResource("RectangleShape2D_c2ibq")
 
-[node name="StrongEnemy" type="CharacterBody2D" parent="." unique_id=815290073]
+[node name="StrongEnemy" type="CharacterBody2D" parent="." unique_id=815290073 groups=["Enemies"]]
 position = Vector2(8, 27)
 script = ExtResource("13_kjvhd")
-Speed = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="StrongEnemy" unique_id=1763457783]
 position = Vector2(520, 202)
 texture = ExtResource("14_5tuhn")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StrongEnemy" unique_id=879988916]
-position = Vector2(527, 231)
-shape = SubResource("CapsuleShape2D_bg4s2")
+position = Vector2(523.5, 208)
+shape = SubResource("RectangleShape2D_j4qnp")
