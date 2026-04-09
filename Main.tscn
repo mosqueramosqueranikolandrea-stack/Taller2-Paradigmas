@@ -10,10 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://brtt3cwfy8cwh" path="res://Tiny Swords (Free Pack)/Buildings/Yellow Buildings/Tower.png" id="8_c2ibq"]
 [ext_resource type="Script" uid="uid://bdwkb4pmuqhkp" path="res://Clases/Hero.cs" id="9_c2ibq"]
 [ext_resource type="Texture2D" uid="uid://dvk8cfc73474k" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Purple Units/Warrior/Warrior_Idle1.png" id="10_fpfj3"]
-[ext_resource type="Script" uid="uid://3kmnqslanhob" path="res://Clases/FastEnemy.cs" id="11_fpfj3"]
 [ext_resource type="Texture2D" uid="uid://cb70bfje1y5vl" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Purple Units/Warrior/Warrior_Idle2.png" id="11_sc1dx"]
 [ext_resource type="Texture2D" uid="uid://dwn8aod2pedvw" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Purple Units/Warrior/Warrior_Idle3.png" id="12_kjvhd"]
-[ext_resource type="Texture2D" uid="uid://3eerwf2nqa7w" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Red Units/Archer/Archer_Idle.png" id="12_sc1dx"]
 [ext_resource type="Script" uid="uid://23wotlffer28" path="res://Clases/StrongEnemy.cs" id="13_kjvhd"]
 [ext_resource type="Texture2D" uid="uid://cjen4px5awglh" path="res://Tiny Swords (Free Pack) (1)/Tiny Swords (Free Pack)/Units/Red Units/Lancer/Lancer_Idle.png" id="14_5tuhn"]
 
@@ -1645,7 +1643,7 @@ sources/4 = SubResource("TileSetAtlasSource_fpfj3")
 size = Vector2(66.5, 67)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_devvj"]
-size = Vector2(84, 83.5)
+size = Vector2(98, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5tuhn"]
 animations = [{
@@ -1664,11 +1662,14 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2ibq"]
-size = Vector2(65, 82)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4qnp"]
 size = Vector2(50, 82)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjvhd"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpfj3"]
+bg_color = Color(0, 0.5529412, 0, 1)
 
 [node name="Main" type="Node2D" unique_id=852754187]
 
@@ -1704,9 +1705,10 @@ position = Vector2(386.75, 266)
 shape = SubResource("RectangleShape2D_2gh4u")
 
 [node name="AttackArea" type="Area2D" parent="Hero" unique_id=1862411903]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hero/AttackArea" unique_id=1402293457]
-position = Vector2(388, 262.25)
+position = Vector2(387, 259)
 shape = SubResource("RectangleShape2D_devvj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Hero" unique_id=1901466136]
@@ -1714,26 +1716,57 @@ position = Vector2(392, 264)
 sprite_frames = SubResource("SpriteFrames_5tuhn")
 animation = &"idle"
 
-[node name="FastEnemy" type="CharacterBody2D" parent="." unique_id=206826912 groups=["Enemies"]]
-position = Vector2(377, 272)
-script = ExtResource("11_fpfj3")
-
-[node name="Sprite2D" type="Sprite2D" parent="FastEnemy" unique_id=392771084]
-position = Vector2(-157, -15)
-texture = ExtResource("12_sc1dx")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FastEnemy" unique_id=1673681814]
-position = Vector2(-154.5, -17)
-shape = SubResource("RectangleShape2D_c2ibq")
-
-[node name="StrongEnemy" type="CharacterBody2D" parent="." unique_id=815290073 groups=["Enemies"]]
-position = Vector2(8, 27)
+[node name="FastEnemy" type="CharacterBody2D" parent="." unique_id=815290073 groups=["Enemies", "enemies"]]
+position = Vector2(27, 27)
 script = ExtResource("13_kjvhd")
 
-[node name="Sprite2D" type="Sprite2D" parent="StrongEnemy" unique_id=1763457783]
+[node name="Sprite2D" type="Sprite2D" parent="FastEnemy" unique_id=1763457783]
 position = Vector2(520, 202)
 texture = ExtResource("14_5tuhn")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StrongEnemy" unique_id=879988916]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="FastEnemy" unique_id=879988916]
 position = Vector2(528, 235)
 shape = SubResource("RectangleShape2D_j4qnp")
+
+[node name="HealthBar" type="ProgressBar" parent="FastEnemy" unique_id=1071265595]
+offset_left = 469.0
+offset_top = 157.0
+offset_right = 723.0
+offset_bottom = 287.0
+scale = Vector2(0.5, 0.2)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/background = SubResource("StyleBoxFlat_kjvhd")
+value = 100.0
+
+[node name="StrongEnemy" type="CharacterBody2D" parent="." unique_id=805989610 groups=["Enemies", "enemies"]]
+position = Vector2(54, 54)
+script = ExtResource("13_kjvhd")
+
+[node name="Sprite2D" type="Sprite2D" parent="StrongEnemy" unique_id=640480425]
+position = Vector2(520, 202)
+texture = ExtResource("14_5tuhn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StrongEnemy" unique_id=2086393281]
+position = Vector2(528, 235)
+shape = SubResource("RectangleShape2D_j4qnp")
+
+[node name="HealthBar" type="ProgressBar" parent="StrongEnemy" unique_id=1398182906]
+offset_left = 469.0
+offset_top = 157.0
+offset_right = 723.0
+offset_bottom = 287.0
+scale = Vector2(0.5, 0.2)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/background = SubResource("StyleBoxFlat_kjvhd")
+value = 100.0
+
+[node name="IU" type="CanvasLayer" parent="." unique_id=1109166375]
+
+[node name="HealthBar" type="ProgressBar" parent="IU" unique_id=1089817540]
+offset_left = 73.0
+offset_top = 16.0
+offset_right = 315.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_fpfj3")
+value = 100.0

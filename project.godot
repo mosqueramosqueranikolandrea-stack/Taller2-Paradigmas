@@ -24,6 +24,10 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="Taller2"
 
+[global_group]
+
+Enemies=""
+
 [input]
 
 attack={

@@ -1,40 +1,28 @@
 using Godot;
 using System;
 
-public partial class StrongEnemy : CharacterBody2D
+public partial class StrongEnemy : Enemy
 {
-	[Export] public float Speed = 70;
+	[Export] public float Speed = 60f;
 
 	private Vector2 direction;
-	private Vector2 screenSize;
-
-	public override void _Ready()
-	{
-		RandomNumberGenerator rng = new RandomNumberGenerator();
-		rng.Randomize();
-
-		
-		direction = new Vector2(
-			rng.RandfRange(0.2f, 1f),
-			rng.RandfRange(-1f, 1f)
-		).Normalized();
-
-		screenSize = GetViewportRect().Size;
-	}
+	private float changeTimer = 0;
 
 	public override void _PhysicsProcess(double delta)
 	{
+		changeTimer -= (float)delta;
+
+		if (changeTimer <= 0)
+		{
+			direction = new Vector2(
+				(float)GD.RandRange(-1, 1),
+				(float)GD.RandRange(-1, 1)
+			).Normalized();
+
+			changeTimer = 3f; // más lento
+		}
+
 		Velocity = direction * Speed;
 		MoveAndSlide();
-
-		if (Position.X < 0 || Position.X > screenSize.X)
-			direction.X *= -1;
-
-		if (Position.Y < 0 || Position.Y > screenSize.Y)
-			direction.Y *= -1;
-
-		
-		if (direction.X < 0)
-			direction.X *= -1;
 	}
 }
